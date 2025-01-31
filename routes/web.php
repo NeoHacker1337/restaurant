@@ -7,12 +7,19 @@ use App\Http\Controllers\Admin\RestaurantManagementController;
 use App\Http\Controllers\Admin\CuisineController;
 use App\Http\Controllers\Admin\CustomerManagement;
 use App\Http\Controllers\Admin\DeliveryManagement;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\InventoryCategoryController;
+use App\Http\Controllers\InventoryItemController;
+use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\ModifierController;
+use App\Http\Controllers\MenuTypeController;
+use App\Http\Controllers\RestaurantMenuCardController;
+use App\Http\Controllers\SpecialOfferController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\VendorMiddleware;
 use App\Http\Middleware\DeliveryMiddleware;
-
 
 
 // Frontend Controller
@@ -53,6 +60,22 @@ Route::middleware(CustomerMiddleware::class)->group(function () {
 Route::middleware(VendorMiddleware::class)->group(function () {
     Route::get('/vendor/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('vendor.dashboard');
     Route::resource('restaurant-profile', ProfileController::class);
+
+    Route::resource('restaurant-menu-card', RestaurantMenuCardController::class);
+    // Category Routes for e.g., "Appetizers", "Main Courses"
+    Route::resource('categories', CategoryController::class);
+    // Modifier Routes for e.g., "Extra Cheese", "Side Salad"
+    Route::resource('modifiers', ModifierController::class);
+    // Menu Type Routes for e.g., "Breakfast", "Lunch", "Dinner"
+    Route::resource('menu-types', MenuTypeController::class);
+    // Menu Item Routes 
+    Route::resource('menu-items', MenuItemController::class);
+    // Special Offer Routes 
+    Route::resource('special-offers', SpecialOfferController::class);
+
+    Route::resource('inventory-category', InventoryCategoryController::class);
+
+    Route::resource('inventory-items',InventoryItemController::class);
 });
 
 Route::middleware(DeliveryMiddleware::class)->group(function () {
